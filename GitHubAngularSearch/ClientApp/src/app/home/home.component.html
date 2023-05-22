@@ -1,0 +1,32 @@
+<form class="my-form data-form" [formGroup]="form">
+
+  <mat-form-field appearance="outline">
+    <input matInput [ngModel]="searchTerm" (ngModelChange)="searchTerm = $event" type="text" name="searchTerm" placeholder="Search Term" formControlName="searchTerm">
+
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" (click)="onClick()">Search</button>
+
+</form>
+
+
+<p *ngIf="!repos$"><em>Loading...</em></p>
+
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="repos$">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Name</th>      
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let repo of repos$ | async">
+      <td>{{ repo.id }}</td>
+      <td>{{ repo.name }}</td>
+      <td><img src="{{repo.avatarUrl}}" width=50 height=50/>"</td>
+      <td><button (click)="bookmark(repo.id, repo.url)">Bookmark</button></td>
+    </tr>
+  </tbody>
+</table>
+
+
